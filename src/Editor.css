@@ -1,7 +1,7 @@
 .editor-wrapper {
   width: 100%;
   background: #f2f2f2; /* light gray */
-  padding: 8px 16px; /* reduced inner spacing */
+  padding: 8px 16px;
   box-sizing: border-box;
   border-radius: 6px;
   margin: 0.2rem 0; /* reduced outer spacing */
@@ -10,12 +10,11 @@
 }
 
 .editor-root {
-  min-height: calc(1em * 2 + 4px);
+  min-height: calc(1em + 2px);
   outline: none;
   flex: 1 1 auto;
   width: 100%;
   font-size: 14px;
-  /* Previous line-height: 0.5 caused wrapped lines to overlap. Use a readable value. */
   line-height: 1.35;
   color: #111;
   background: transparent; /* wrapper supplies background */
