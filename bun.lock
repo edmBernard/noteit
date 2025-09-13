@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "time-since",
+      "name": "noteit",
       "dependencies": {
         "@lexical/react": "^0.35.0",
         "lexical": "^0.35.0",
