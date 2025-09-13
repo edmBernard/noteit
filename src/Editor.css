@@ -1,0 +1,36 @@
+.editor-wrapper {
+  width: 100%;
+  background: #f2f2f2; /* light gray */
+  padding: 0px 16px; /* reduced inner spacing */
+  box-sizing: border-box;
+  border-radius: 6px;
+  margin: 0.2rem 0; /* reduced outer spacing */
+  position: relative; /* for placeholder positioning */
+  display: flex;
+}
+
+.editor-root {
+  min-height: calc(1em * 2 + 4px);
+  outline: none;
+  flex: 1 1 auto;
+  width: 100%;
+  font-size: 14px;
+  line-height: 0.5; /* tighter line spacing */
+  color: #111;
+  background: transparent; /* wrapper supplies background */
+  display: block;
+}
+
+.editor-placeholder {
+  color: #888;
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  transform: translateY(-50%);
+  pointer-events: none;
+  user-select: none;
+  line-height: 1.3; /* match editor text */
+}
