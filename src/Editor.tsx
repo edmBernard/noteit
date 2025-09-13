@@ -40,30 +40,30 @@ function onError(error: Error) {
 
 interface EditorProps {
   id: string;
-  onBecomeNonEmpty?: () => void;
+  // Called whenever empty state changes (true=empty, false=non-empty)
+  onEmptyStateChange?: (isEmpty: boolean) => void;
   autoFocus?: boolean;
 }
 
-// Internal plugin to detect first time the editor becomes non-empty
-function NonEmptyListenerPlugin({onBecomeNonEmpty}: {onBecomeNonEmpty?: () => void}) {
+// Internal plugin to detect empty/non-empty state changes continuously
+function EmptinessListenerPlugin({onChange}: {onChange?: (isEmpty: boolean) => void}) {
   const [editor] = useLexicalComposerContext();
-  const firedRef = useRef(false);
+  const lastStateRef = useRef<boolean | null>(null);
   useEffect(() => {
     return editor.registerUpdateListener(({editorState}) => {
-      if (firedRef.current) return;
       editorState.read(() => {
         const root = $getRoot();
-        if (root.getTextContent().trim().length > 0) {
-          firedRef.current = true;
-          onBecomeNonEmpty?.();
-        }
+        const isEmpty = root.getTextContent().trim().length === 0;
+        if (lastStateRef.current === isEmpty) return;
+        lastStateRef.current = isEmpty;
+        onChange?.(isEmpty);
       });
     });
-  }, [editor, onBecomeNonEmpty]);
+  }, [editor, onChange]);
   return null;
 }
 
-export default function Editor({id, onBecomeNonEmpty, autoFocus}: EditorProps) {
+export default function Editor({id, onEmptyStateChange, autoFocus}: EditorProps) {
   const initialConfig = {
     namespace: `editor-${id}`,
     theme,
@@ -89,7 +89,7 @@ export default function Editor({id, onBecomeNonEmpty, autoFocus}: EditorProps) {
       <ListPlugin />
       <CheckListPlugin />
       <ActiveEditorPlugin />
-      <NonEmptyListenerPlugin onBecomeNonEmpty={onBecomeNonEmpty} />
+      <EmptinessListenerPlugin onChange={onEmptyStateChange} />
       <LocalStoragePlugin storageKey={`noteit:editor:${id}`} />
     </LexicalComposer>
   );

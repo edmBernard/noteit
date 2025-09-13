@@ -1,5 +1,5 @@
 import {INSERT_CHECK_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND, REMOVE_LIST_COMMAND, ListNode, ListItemNode} from '@lexical/list';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import { $getSelection, $isRangeSelection, type LexicalEditor } from 'lexical';
 import {subscribeActiveEditor, getActiveEditor} from './activeEditorStore';
 import './ToolbarPlugin.css';
@@ -92,6 +92,7 @@ function cycleChecklist(editor: LexicalEditor) {
 export default function ToolbarPlugin() {
   const [editor, setEditor] = useState<LexicalEditor | null>(() => getActiveEditor());
   const [listType, setListType] = useState<'bullet' | 'number' | 'check' | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   // Subscribe to active editor changes
   useEffect(() => {
@@ -132,8 +133,24 @@ export default function ToolbarPlugin() {
 
   const inactive = !editor;
 
+  // Observe size to update CSS variable so layout can reserve space
+  useEffect(() => {
+    if (!ref.current) return;
+    const el = ref.current;
+    const ro = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        const h = entry.contentRect.height;
+        document.documentElement.style.setProperty('--toolbar-height', h + 'px');
+      }
+    });
+    ro.observe(el);
+    // Initial set
+    document.documentElement.style.setProperty('--toolbar-height', el.getBoundingClientRect().height + 'px');
+    return () => ro.disconnect();
+  }, []);
+
   return (
-    <div className={`lex-toolbar${inactive ? ' lex-toolbar-hidden' : ''}`}>
+    <div ref={ref} className={`lex-toolbar${inactive ? ' lex-toolbar-hidden' : ''}`}>
       <button
         type="button"
         onClick={onCheck}

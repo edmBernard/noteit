@@ -10,24 +10,27 @@ interface EditorItem {
 export default function EditorList() {
   const [editors, setEditors] = useState<EditorItem[]>([{id: '1', isEmpty: true}]);
 
-  const handleNonEmpty = useCallback((id: string) => {
+  const handleEmptyStateChange = useCallback((id: string, isEmpty: boolean) => {
     setEditors(prev => {
-      // If this editor already marked non-empty, do nothing
-      let changed = false;
-      const next = prev.map(e => {
-        if (e.id === id && e.isEmpty) {
-          changed = true;
-          return {...e, isEmpty: false};
-        }
-        return e;
-      });
-      if (!changed) return prev; // no state change
-      // Only add a new empty editor if the edited one was the last one
-      const isLast = prev[prev.length - 1].id === id;
-      if (isLast) {
-        const newId = String(prev.length + 1);
+      const next = prev.map(e => e.id === id ? {...e, isEmpty} : e);
+
+      // If the last empty editor becomes non-empty and it is the final one, ensure there's a trailing empty editor.
+      const last = next[next.length - 1];
+      if (!last.isEmpty) {
+        // Append exactly one empty editor at end
+        const newId = String(next.length + 1);
         next.push({id: newId, isEmpty: true});
       }
+
+      // Prune extra empty editors at end: keep only one trailing empty editor
+      let i = next.length - 1;
+      // Count consecutive empties from end
+      while (i > 0 && next[i - 1].isEmpty && next[i].isEmpty) {
+        // Remove the earlier one, keep the very last
+        next.splice(i - 1, 1);
+        i--;
+      }
+
       return next;
     });
   }, []);
@@ -38,9 +41,9 @@ export default function EditorList() {
         <Editor
           key={e.id}
           id={e.id}
-            // autofocus the last (new) empty editor only on creation
-          autoFocus={idx === editors.length - 1 && e.isEmpty && editors.length === 1}
-          onBecomeNonEmpty={() => handleNonEmpty(e.id)}
+          // autofocus only the first editor initially
+          autoFocus={idx === 0 && e.isEmpty && editors.length === 1}
+          onEmptyStateChange={(isEmpty) => handleEmptyStateChange(e.id, isEmpty)}
         />
       ))}
     </>
