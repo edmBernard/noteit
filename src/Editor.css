@@ -37,10 +37,8 @@
 
 /* MARK: List styles */
 
-.editor-ol {
-  list-style-position: outside;
-}
-.editor-ul {
+.editor-ol, .editor-ul {
+  padding-left: 1.5em;
   list-style-position: outside;
 }
 
@@ -60,7 +58,6 @@
 }
 
 .editor-listItem {
-  margin-left: 16px;
   font-family: var(--listitem-marker-font-family);
   font-size: var(--listitem-marker-font-size);
   background-color: var(--listitem-marker-background-color);
@@ -86,6 +83,10 @@
 }
 
 /* The style of the checkbox */
+.editor-checklist {
+  padding-left: 0em;
+}
+
 .editor-listItemUnchecked:before {
   border: 1px solid #999;
   border-radius: 2px;
@@ -115,7 +116,6 @@
 .editor-listItemChecked,
 .editor-listItemUnchecked {
   position: relative;
-  margin-left: 0.5em;
   margin-right: 0.5em;
   padding-left: 1.5em;
   padding-right: 1.5em;
