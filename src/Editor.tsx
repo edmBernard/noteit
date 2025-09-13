@@ -10,6 +10,9 @@ import {ListItemNode, ListNode} from '@lexical/list';
 import ActiveEditorPlugin from './ActiveEditorPlugin';
 import type { EditorThemeClasses } from 'lexical';
 import './Editor.css';
+import {useEffect, useRef} from 'react';
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import { $getRoot } from 'lexical';
 
 const theme: EditorThemeClasses = {
   // Root element of the content editable area
@@ -34,9 +37,34 @@ function onError(error: Error) {
   console.error(error);
 }
 
-export default function Editor() {
+interface EditorProps {
+  id: string;
+  onBecomeNonEmpty?: () => void;
+  autoFocus?: boolean;
+}
+
+// Internal plugin to detect first time the editor becomes non-empty
+function NonEmptyListenerPlugin({onBecomeNonEmpty}: {onBecomeNonEmpty?: () => void}) {
+  const [editor] = useLexicalComposerContext();
+  const firedRef = useRef(false);
+  useEffect(() => {
+    return editor.registerUpdateListener(({editorState}) => {
+      if (firedRef.current) return;
+      editorState.read(() => {
+        const root = $getRoot();
+        if (root.getTextContent().trim().length > 0) {
+          firedRef.current = true;
+          onBecomeNonEmpty?.();
+        }
+      });
+    });
+  }, [editor, onBecomeNonEmpty]);
+  return null;
+}
+
+export default function Editor({id, onBecomeNonEmpty, autoFocus}: EditorProps) {
   const initialConfig = {
-    namespace: 'MyEditor',
+    namespace: `editor-${id}`,
     theme,
     onError,
     nodes: [ListNode, ListItemNode]
@@ -56,10 +84,11 @@ export default function Editor() {
         />
       </div>
       <HistoryPlugin />
-      <AutoFocusPlugin />
+      {autoFocus && <AutoFocusPlugin />}
       <ListPlugin />
       <CheckListPlugin />
       <ActiveEditorPlugin />
+      <NonEmptyListenerPlugin onBecomeNonEmpty={onBecomeNonEmpty} />
     </LexicalComposer>
   );
 }
