@@ -34,3 +34,98 @@
   user-select: none;
   line-height: 1.3; /* match editor text */
 }
+
+/* MARK: List styles */
+
+.editor-ol {
+  list-style-position: outside;
+}
+.editor-ul {
+  list-style-position: outside;
+}
+
+/* Add vertical spacing only when lists are adjacent to prevent them from visually collapsing */
+.editor-ol + .editor-ol,
+.editor-ol + .editor-ul,
+.editor-ul + .editor-ol,
+.editor-ul + .editor-ul {
+  margin-top: 1em; /* space between consecutive lists */
+}
+
+/* Improve readability of list items despite tight global line-height */
+.editor-ol li,
+.editor-ul li {
+  line-height: 0.5; /* restore reasonable line height inside lists */
+  margin-block: 1em; /* slight breathing room between items */
+}
+
+.editor-listItem {
+  margin-left: 16px;
+  font-family: var(--listitem-marker-font-family);
+  font-size: var(--listitem-marker-font-size);
+  background-color: var(--listitem-marker-background-color);
+}
+
+.editor-listItemChecked {
+  text-decoration: line-through;
+}
+
+/* The checkbox */
+.editor-listItemUnchecked:before,
+.editor-listItemChecked:before {
+  content: '\200B';
+  width: 0.9em;
+  height: 0.9em;
+  top: 50%;
+  left: 0;
+  cursor: pointer;
+  display: block;
+  background-size: cover;
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+/* The style of the checkbox */
+.editor-listItemUnchecked:before {
+  border: 1px solid #999;
+  border-radius: 2px;
+}
+.editor-listItemChecked:before {
+  border: 1px solid rgb(61, 135, 245);
+  border-radius: 2px;
+  background-color: #3d87f5;
+  background-repeat: no-repeat;
+}
+/* The tick in the checkbox */
+.editor-listItemChecked:after {
+  content: '';
+  cursor: pointer;
+  border-color: #fff;
+  border-style: solid;
+  position: absolute;
+  display: block;
+  top: 45%;
+  width: 0.2em;
+  left: 0.35em;
+  height: 0.4em;
+  transform: translateY(-50%) rotate(45deg);
+  border-width: 0 0.1em 0.1em 0;
+}
+
+.editor-listItemChecked,
+.editor-listItemUnchecked {
+  position: relative;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  list-style-type: none;
+  outline: none;
+  display: block;
+  /* min-height: 1.5em; */
+}
+
+.editor-listItemChecked > *,
+.editor-listItemUnchecked > * {
+  margin-left: 0.01em;
+}

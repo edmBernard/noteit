@@ -1,16 +1,12 @@
 import './App.css'
-import Editor from './Editor.tsx'
+import EditorList from './EditorList.tsx'
+import ToolbarPlugin from './ToolbarPlugin';
 
-function App() {
+export default function App() {
   return (
-    <div>
-      <div className="w-full">
-        <Editor />
-        <Editor />
-        <Editor />
-      </div>
-    </div>
+    <>
+      <EditorList />
+      <ToolbarPlugin />
+    </>
   )
 }
-
-export default App

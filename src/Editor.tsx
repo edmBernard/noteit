@@ -4,12 +4,27 @@ import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
+import {ListPlugin} from '@lexical/react/LexicalListPlugin';
+import {CheckListPlugin} from '@lexical/react/LexicalCheckListPlugin';
+import {ListItemNode, ListNode} from '@lexical/list';
+import ActiveEditorPlugin from './ActiveEditorPlugin';
 import type { EditorThemeClasses } from 'lexical';
 import './Editor.css';
 
 const theme: EditorThemeClasses = {
   // Root element of the content editable area
-  root: 'editor-root'
+  root: 'editor-root',
+  list: {
+    checklist: 'editor-checklist',
+    listitem: 'editor-listItem',
+    listitemChecked: 'editor-listItemChecked',
+    listitemUnchecked: 'editor-listItemUnchecked',
+    nested: {
+      listitem: 'editor-nestedListItem',
+    },
+    ol: 'editor-ol',
+    ul: 'editor-ul',
+  },
 };
 
 // Catch any errors that occur during Lexical updates and log them
@@ -19,11 +34,12 @@ function onError(error: Error) {
   console.error(error);
 }
 
-function Editor() {
+export default function Editor() {
   const initialConfig = {
     namespace: 'MyEditor',
     theme,
     onError,
+    nodes: [ListNode, ListItemNode]
   };
 
   return (
@@ -41,8 +57,9 @@ function Editor() {
       </div>
       <HistoryPlugin />
       <AutoFocusPlugin />
+      <ListPlugin />
+      <CheckListPlugin />
+      <ActiveEditorPlugin />
     </LexicalComposer>
   );
 }
-
-export default Editor;

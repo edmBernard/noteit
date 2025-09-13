@@ -1,0 +1,63 @@
+.lex-toolbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(30,30,30,0.85);
+  backdrop-filter: blur(4px);
+  border-top: 1px solid #444;
+  z-index: 1000;
+}
+
+.lex-toolbar button {
+  background: #2a2a2a;
+  color: #eee;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.7rem;
+  line-height: 1;
+}
+
+.lex-toolbar button:hover {
+  background: #3a3a3a;
+}
+
+.lex-toolbar button.active {
+  background: #55518a;
+  color: #fff;
+  border: 1px solid #7e79c2;
+}
+
+.lex-toolbar button.active:hover {
+  background: #625ca3;
+}
+
+.lex-toolbar.lex-toolbar-hidden {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.lex-toolbar:not(.lex-toolbar-hidden) {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+@media (prefers-color-scheme: light) {
+  .lex-toolbar {
+    background: rgba(255,255,255,0.9);
+    border-top: 1px solid #ddd;
+  }
+  .lex-toolbar button {
+    background: #f1f1f1;
+    color: #222;
+  }
+  .lex-toolbar button:hover {
+    background: #e2e2e2;
+  }
+}
