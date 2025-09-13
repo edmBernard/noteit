@@ -29,6 +29,7 @@ const theme: EditorThemeClasses = {
     ol: 'editor-ol',
     ul: 'editor-ul',
   },
+  paragraph: 'editor-paragraph',
 };
 
 // Catch any errors that occur during Lexical updates and log them
