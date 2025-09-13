@@ -8,6 +8,7 @@ import {ListPlugin} from '@lexical/react/LexicalListPlugin';
 import {CheckListPlugin} from '@lexical/react/LexicalCheckListPlugin';
 import {ListItemNode, ListNode} from '@lexical/list';
 import ActiveEditorPlugin from './ActiveEditorPlugin';
+import LocalStoragePlugin from './LocalStoragePlugin';
 import type { EditorThemeClasses } from 'lexical';
 import './Editor.css';
 import {useEffect, useRef} from 'react';
@@ -89,6 +90,7 @@ export default function Editor({id, onBecomeNonEmpty, autoFocus}: EditorProps) {
       <CheckListPlugin />
       <ActiveEditorPlugin />
       <NonEmptyListenerPlugin onBecomeNonEmpty={onBecomeNonEmpty} />
+      <LocalStoragePlugin storageKey={`noteit:editor:${id}`} />
     </LexicalComposer>
   );
 }

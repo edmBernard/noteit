@@ -67,3 +67,19 @@ export default tseslint.config([
   },
 ])
 ```
+
+## Editor State Persistence
+
+Each editor instance automatically saves its content to `localStorage` and restores it on reload. The logic lives in `LocalStoragePlugin.tsx` which:
+
+- Uses a per-editor storage key: `noteit:editor:<id>` where `<id>` matches the editor's `id` prop.
+- On mount, loads previously serialized Lexical editor state (if any) and sets it only if the current editor is still empty.
+- Listens to editor updates and debounces writes (500ms) to reduce churn.
+- Performs a final synchronous save on `beforeunload`.
+
+To change debounce or key pattern, adjust the props when adding `<LocalStoragePlugin />` inside `Editor.tsx`.
+
+Potential future enhancements:
+- Add a version field to stored JSON to support migrations.
+- Implement cleanup (e.g., remove stale keys when an editor is deleted).
+- Support exporting/importing all notes as a single JSON bundle.
