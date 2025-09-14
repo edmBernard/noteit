@@ -8,8 +8,10 @@
 
 /* Reserve space for fixed toolbar so last editor isn't obscured */
 body, #root {
-  /* Fallback 72px if variable not set yet */
+  /* Reserve space equal to toolbar height (so last editor not hidden) */
   padding-bottom: calc(var(--toolbar-height, 72px) + 1rem);
-  /* Ensure scroll padding so focusing last line scrolls above toolbar */
+  /* Scroll anchoring when focusing at bottom */
   scroll-padding-bottom: calc(var(--toolbar-height, 72px) + 0.5rem);
 }
+
+/* Keyboard overlay adjustments handled dynamically via toolbar positioning; no extra padding needed. */

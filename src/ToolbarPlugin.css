@@ -2,15 +2,18 @@
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  /* Only supported by chromium-based browsers */
+  bottom: env(keyboard-inset-height, 0px);
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 0.75rem env(safe-area-inset-bottom, 0px);
   background: rgba(30,30,30,0.85);
   backdrop-filter: blur(4px);
   border-top: 1px solid #444;
   z-index: 1000;
+  /* Smooth transition when keyboard appears */
+  transition: bottom 180ms ease;
 }
 
 .lex-toolbar button {
