@@ -2,8 +2,8 @@
   position: fixed;
   left: 0;
   right: 0;
-  /* Only supported by chromium-based browsers */
-  bottom: env(keyboard-inset-height, 0px);
+  /* Use env keyboard inset with fallback on offset var (set via JS) or 0 */
+  bottom: env(keyboard-inset-height, var(--toolbar-bottom-offset, 0px));
   display: flex;
   justify-content: center;
   gap: 0.5rem;
@@ -19,7 +19,7 @@
 .lex-toolbar button {
   background: #2a2a2a;
   color: #eee;
-  font-size: 2rem;
+  font-size: 1.1rem;
   padding: 0.4rem 0.7rem;
   line-height: 1;
 }
@@ -29,13 +29,13 @@
 }
 
 .lex-toolbar button.active {
-  background: #55518a;
+  background: #516c8a;
   color: #fff;
-  border: 1px solid #7e79c2;
+  border: 1px solid #7997c2;
 }
 
 .lex-toolbar button.active:hover {
-  background: #625ca3;
+  background: #5c82a3;
 }
 
 .lex-toolbar.lex-toolbar-hidden {

@@ -8,10 +8,10 @@
 
 /* Reserve space for fixed toolbar so last editor isn't obscured */
 body, #root {
-  /* Reserve space equal to toolbar height (so last editor not hidden) */
-  padding-bottom: calc(var(--toolbar-height, 72px) + 1rem);
+  /* Reserve vertical space: toolbar height plus any upward offset (when keyboard visible) */
+  padding-bottom: calc(var(--toolbar-height, 72px) + max(env(keyboard-inset-height, var(--toolbar-bottom-offset, 0px)), 0px) + 1rem);
   /* Scroll anchoring when focusing at bottom */
-  scroll-padding-bottom: calc(var(--toolbar-height, 72px) + 0.5rem);
+  scroll-padding-bottom: calc(var(--toolbar-height, 72px) + max(env(keyboard-inset-height, var(--toolbar-bottom-offset, 0px)), 0px) + 0.5rem);
 }
 
 /* Keyboard overlay adjustments handled dynamically via toolbar positioning; no extra padding needed. */
