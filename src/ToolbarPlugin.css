@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.5rem 0.75rem env(safe-area-inset-bottom, 0px);
+  padding: 0.5rem 0.75rem;
   background: rgba(30,30,30,0.85);
   backdrop-filter: blur(4px);
   border-top: 1px solid #444;
@@ -19,7 +19,7 @@
 .lex-toolbar button {
   background: #2a2a2a;
   color: #eee;
-  font-size: 0.85rem;
+  font-size: 2rem;
   padding: 0.4rem 0.7rem;
   line-height: 1;
 }
