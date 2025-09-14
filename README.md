@@ -1,85 +1,45 @@
+<p align="center">
+  <img src="public/favicon.svg" alt="NoteIt icon" width="96" height="96" />
+</p>
+
 # NoteIt
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Minimal, zero-backend note taking for the browser powered by React + Lexical. Open the app and start typing—every note is persisted locally. Designed to feel instant, minimal and try to be mobile-friendly.
 
-Currently, two official plugins are available:
+- Repository : [https://github.com/edmBernard/noteit](https://github.com/edmBernard/noteit)
+- Demo : [Demo](https://edmbernard.github.io/noteit/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> Disclaimer : It's a toy project for myself. I'm not a JS dev, so don't expect good quality code.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Infinite note list UX: a new empty editor is auto‑added when the last note gains content, and redundant trailing empties are pruned.
+- Local persistence: each note saves to `localStorage` (debounced) and is restored on reload with no manual action.
+- "Rich" text lists: bullet, numbered, and checklist support (Lexical list nodes).
+- Mobile friendly: I tried. my main usage if from a mobile, so I tried to make it work on mobile As good as I can.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Persistence Details
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+We use `LocalStorage` from the browser to keep data between usage. That mean data will be loss if you clean browser data.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+
+Clone & run:
+
+```bash
+git clone <repo-url>
+cd noteit
+bun install
+bun run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then open the printed local URL (usually `http://localhost:5173`).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Deployment (GitHub Pages via subtree)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+This project can be published to GitHub Pages by pushing the built `dist/` folder to a `gh-pages` branch. A simple approach already used:
+
+```bash
+bun run build
+git subtree push --prefix dist origin gh-pages
 ```
-
-## Editor State Persistence
-
-Each editor instance automatically saves its content to `localStorage` and restores it on reload. The logic lives in `LocalStoragePlugin.tsx` which:
-
-- Uses a per-editor storage key: `noteit:editor:<id>` where `<id>` matches the editor's `id` prop.
-- On mount, loads previously serialized Lexical editor state (if any) and sets it only if the current editor is still empty.
-- Listens to editor updates and debounces writes (500ms) to reduce churn.
-- Performs a final synchronous save on `beforeunload`.
-
-To change debounce or key pattern, adjust the props when adding `<LocalStoragePlugin />` inside `Editor.tsx`.
-
-Potential future enhancements:
-- Add a version field to stored JSON to support migrations.
-- Implement cleanup (e.g., remove stale keys when an editor is deleted).
-- Support exporting/importing all notes as a single JSON bundle.
