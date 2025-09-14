@@ -2,8 +2,8 @@
   position: fixed;
   left: 0;
   right: 0;
-  /* Use env keyboard inset with fallback on offset var (set via JS) or 0 */
-  bottom: env(keyboard-inset-height, var(--toolbar-bottom-offset, 0px));
+  /* Use env keyboard inset with fallback to 0 */
+  bottom: env(keyboard-inset-height, 0px);
   display: flex;
   justify-content: center;
   gap: 0.5rem;
