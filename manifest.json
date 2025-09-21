@@ -1,0 +1,16 @@
+{
+  "name": "NoteIt",
+  "short_name": "NoteIt",
+  "description": "A simple note-taking webapp.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
