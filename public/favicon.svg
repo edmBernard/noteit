@@ -24,11 +24,11 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="0.921875"
-     inkscape:cx="366.10169"
+     inkscape:cx="263.05085"
      inkscape:cy="245.15254"
      inkscape:window-width="1450"
      inkscape:window-height="916"
-     inkscape:window-x="63"
+     inkscape:window-x="62"
      inkscape:window-y="38"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg157" />
@@ -158,14 +158,5 @@
        id="path153"
        sodipodi:nodetypes="cccc"
        style="stroke:#050b60;stroke-opacity:1" />
-    <rect
-       x="6"
-       y="6"
-       width="52"
-       height="52"
-       rx="14"
-       stroke="rgba(255,255,255,0.08)"
-       stroke-width="2"
-       id="rect155" />
   </g>
 </svg>
